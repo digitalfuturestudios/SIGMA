@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Director {
+  id         Int      @id @default(autoincrement())
+  name       String
+  role       String
+  token      String   @unique
+  powerLevel String
+  status     String   @default("active") // active, revoked
+  createdAt  DateTime @default(now())
+}
+
+model Invoice {
+  id        String   @id
+  client    String
+  amount    Float
+  dueDate   String
+  risk      String
+  status    String   @default("pending") // pending, processing, liquidated
+  createdAt DateTime @default(now())
+}
+
+model Retention {
+  id           String   @id
+  date         String
+  client       String
+  baseAmount   Float
+  ivaRetained  Float
+  igtfRetained Float
+  status       String   @default("pending") // pending, syncing, synced
+  seniatCode   String?
+  createdAt    DateTime @default(now())
+}
+
+model Liquidity {
+  id     Int   @id @default(1)
+  amount Float @default(145000)
+}
