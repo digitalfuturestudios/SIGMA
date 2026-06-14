@@ -71,7 +71,7 @@ const BiometricScanner: React.FC<BiometricScannerProps> = ({ onScanSuccess, onCa
             <ScanFace className="mr-2 h-5 w-5 animate-pulse" />
             Validación Biométrica Requerida
           </h2>
-          <button onClick={onCancel} className="text-slate-500 hover:text-red-400 transition-colors">
+          <button onClick={onCancel} className="text-slate-300 hover:text-red-400 transition-colors">
             <XCircle className="h-6 w-6" />
           </button>
         </div>

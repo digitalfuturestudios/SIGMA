@@ -18,11 +18,11 @@ const FactoringModule = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-slate-700/50 relative z-10">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center">
+          <h2 className="text-2xl font-bold text-slate-100 flex items-center">
             <TrendingUp className="h-6 w-6 text-emerald-400 mr-3" />
             Bolsa de Factoring (Cesión de Créditos)
           </h2>
-          <p className="text-slate-400 text-sm mt-2 max-w-2xl">
+          <p className="text-slate-200 text-sm mt-2 max-w-2xl">
             Transforma cuentas por cobrar en flujo de caja inmediato. Empaquetamiento de deuda 
             mediante Smart Contracts transfiriendo el riesgo a fondos de liquidez corporativa.
           </p>
@@ -30,7 +30,7 @@ const FactoringModule = () => {
         
         <div className="mt-4 md:mt-0 flex items-center space-x-3">
           <div className="bg-slate-900/80 px-5 py-3 rounded-xl border border-slate-700 shadow-inner flex flex-col items-end">
-            <span className="text-xs text-slate-400 uppercase tracking-wider">Flujo de Caja Disponible</span>
+            <span className="text-xs text-slate-200 uppercase tracking-wider">Flujo de Caja Disponible</span>
             <div className="flex items-center mt-1">
               <Wallet className="h-4 w-4 text-emerald-400 mr-2" />
               <span className="text-xl font-bold text-emerald-400">
@@ -48,7 +48,7 @@ const FactoringModule = () => {
             <Building2 className="h-5 w-5 text-blue-400" />
           </div>
           <div>
-            <p className="text-xs text-slate-500 uppercase font-semibold">Cuentas por Cobrar Totales</p>
+            <p className="text-xs text-slate-300 uppercase font-semibold">Cuentas por Cobrar Totales</p>
             <p className="text-lg font-bold text-slate-200">
               ${invoices.reduce((sum, inv) => sum + inv.amount, 0).toLocaleString()}
             </p>
@@ -59,7 +59,7 @@ const FactoringModule = () => {
             <ArrowRightLeft className="h-5 w-5 text-indigo-400" />
           </div>
           <div>
-            <p className="text-xs text-slate-500 uppercase font-semibold">Facturas Cedidas (Mes)</p>
+            <p className="text-xs text-slate-300 uppercase font-semibold">Facturas Cedidas (Mes)</p>
             <p className="text-lg font-bold text-slate-200">
               {invoices.filter(i => i.status === 'liquidated').length} Procesadas
             </p>
@@ -70,7 +70,7 @@ const FactoringModule = () => {
             <TrendingUp className="h-5 w-5 text-emerald-400" />
           </div>
           <div>
-            <p className="text-xs text-slate-500 uppercase font-semibold">Rendimiento Pool</p>
+            <p className="text-xs text-slate-300 uppercase font-semibold">Rendimiento Pool</p>
             <p className="text-lg font-bold text-emerald-400">+12.4% APY</p>
           </div>
         </div>
@@ -79,7 +79,7 @@ const FactoringModule = () => {
       {/* Invoices List */}
       <div className="bg-slate-900/60 rounded-xl border border-slate-700/50 overflow-hidden relative z-10">
         <div className="px-6 py-4 border-b border-slate-700/50">
-          <h3 className="font-medium text-slate-200">Cartera de Facturas Pendientes</h3>
+          <h3 className="font-medium text-slate-100">Cartera de Facturas Pendientes</h3>
         </div>
         
         <div className="divide-y divide-slate-700/50">
@@ -88,11 +88,11 @@ const FactoringModule = () => {
               
               <div className="flex-1 w-full flex items-start mb-4 md:mb-0">
                 <div className={`p-2 rounded-lg mr-4 mt-1 ${invoice.status === 'liquidated' ? 'bg-emerald-500/10' : 'bg-slate-800'}`}>
-                  <FileText className={`h-5 w-5 ${invoice.status === 'liquidated' ? 'text-emerald-400' : 'text-slate-400'}`} />
+                  <FileText className={`h-5 w-5 ${invoice.status === 'liquidated' ? 'text-emerald-400' : 'text-slate-200'}`} />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-200">{invoice.client}</h4>
-                  <div className="flex items-center text-xs text-slate-400 mt-1 space-x-3">
+                  <h4 className="font-semibold text-slate-100">{invoice.client}</h4>
+                  <div className="flex items-center text-xs text-slate-200 mt-1 space-x-3">
                     <span>{invoice.id}</span>
                     <span>•</span>
                     <span className="flex items-center text-amber-400">
@@ -107,7 +107,7 @@ const FactoringModule = () => {
 
               <div className="w-full md:w-auto flex flex-col items-end mb-4 md:mb-0 md:mr-8 text-right">
                 <p className="text-xl font-bold text-emerald-400">${invoice.amount.toLocaleString()}</p>
-                <p className="text-xs text-slate-500 uppercase mt-1">Valor Nominal</p>
+                <p className="text-xs text-slate-300 uppercase mt-1">Valor Nominal</p>
               </div>
 
               <div className="w-full md:w-48 flex justify-end">

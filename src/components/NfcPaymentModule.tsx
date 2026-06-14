@@ -13,6 +13,7 @@ import {
 import { useERPStore } from '../store/useERPStore';
 import { io } from 'socket.io-client';
 import BiometricScanner from './BiometricScanner';
+import { ethers } from 'ethers';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:3000`;
 const socket = io(backendUrl);
@@ -26,6 +27,7 @@ const NfcPaymentModule = () => {
   const [mode, setMode] = useState<'tpv' | 'client'>('tpv');
   const [showScanner, setShowScanner] = useState(false);
   const [nfcSupported, setNfcSupported] = useState(false);
+  const [txHash, setTxHash] = useState<string | null>(null);
 
   const handleSimulationRef = useRef<any>(null);
 
@@ -37,10 +39,6 @@ const NfcPaymentModule = () => {
         if (handleSimulationRef.current) handleSimulationRef.current();
       }
     });
-
-    // 2. Hardware Web NFC API
-    // Se ha movido la inicialización a un evento de click porque el navegador requiere
-    // interacción explícita del usuario para solicitar permisos.
 
     return () => {
       socket.off('nfc_tap_received');
@@ -76,6 +74,7 @@ const NfcPaymentModule = () => {
     setIsEditing(false);
     setStatus('processing');
     setConsoleLines([]);
+    setTxHash(null);
     
     // Simular consola de rayos X
     simulationSteps.forEach((step, index) => {
@@ -84,8 +83,20 @@ const NfcPaymentModule = () => {
       }, (index + 1) * 500);
     });
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setStatus('success');
+      
+      // Integración Web3: Generar Firma Criptográfica Real
+      try {
+        const wallet = ethers.Wallet.createRandom();
+        const message = JSON.stringify(chequeData);
+        const signature = await wallet.signMessage(message);
+        setTxHash(signature);
+      } catch (err) {
+        console.error("Web3 Signature Error:", err);
+        setTxHash("0xErrorGenerandoFirma");
+      }
+
       // Integración con el estado global: El pago NFC reduce liquidez y agrega retención
       addFiscalTransactionFromTesoreria(parseFloat(chequeData.amount), chequeData.beneficiary);
     }, 3000);
@@ -157,16 +168,16 @@ const NfcPaymentModule = () => {
         <div className="flex-1 space-y-6">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-xl font-bold text-white flex items-center">
+              <h2 className="text-xl font-bold text-slate-100 flex items-center">
                 <FileText className="h-5 w-5 text-indigo-400 mr-2" />
                 E-Cheque Inteligente a Pagar
               </h2>
-              <p className="text-slate-400 text-sm mt-1">Transacción comercial cifrada vía Blockchain Privada.</p>
+              <p className="text-slate-200 text-sm mt-1">Transacción comercial cifrada vía Blockchain Privada.</p>
             </div>
             <div className="flex space-x-2">
               <button 
                 onClick={() => setMode(mode === 'tpv' ? 'client' : 'tpv')}
-                className={`p-2 rounded-lg border transition-colors flex items-center text-xs font-semibold ${mode === 'tpv' ? 'bg-indigo-900/50 text-indigo-400 border-indigo-700/50' : 'bg-emerald-900/50 text-emerald-400 border-emerald-700/50'}`}
+                className={`p-2 rounded-lg border transition-colors flex items-center text-xs font-semibold ${mode === 'tpv' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200'}`}
                 title="Cambiar Modo"
               >
                 <Wifi className="h-4 w-4 mr-1" />
@@ -175,7 +186,7 @@ const NfcPaymentModule = () => {
               {status === 'idle' && mode === 'tpv' && (
                 <button 
                   onClick={() => setIsEditing(!isEditing)}
-                  className="p-2 text-slate-400 hover:text-indigo-400 bg-slate-900/50 rounded-lg border border-slate-700 transition-colors"
+                  className="p-2 text-slate-200 hover:text-indigo-400 bg-slate-900/50 rounded-lg border border-slate-700 transition-colors"
                   title="Configurar Parámetros"
                 >
                   {isEditing ? <CheckCircle className="h-5 w-5" /> : <Settings className="h-5 w-5" />}
@@ -229,22 +240,24 @@ const NfcPaymentModule = () => {
             ) : (
               <div className="space-y-4 text-slate-300 animate-in fade-in">
                 <div className="flex justify-between border-b border-slate-800 pb-2">
-                  <span className="text-slate-500">Beneficiario:</span>
+                  <span className="text-slate-300">Beneficiario:</span>
                   <span className="font-semibold text-slate-200">{chequeData.beneficiary || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800 pb-2">
-                  <span className="text-slate-500">Concepto:</span>
+                  <span className="text-slate-300">Concepto:</span>
                   <span>{chequeData.concept || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800 pb-2">
-                  <span className="text-slate-500">Monto:</span>
+                  <span className="text-slate-300">Monto:</span>
                   <span className="text-emerald-400 font-bold text-lg">
                     USD ${parseFloat(chequeData.amount || '0').toLocaleString('en-US', {minimumFractionDigits: 2})}
                   </span>
                 </div>
                 <div className="flex justify-between pt-2">
-                  <span className="text-slate-500">Hash de Origen:</span>
-                  <span className="text-xs text-slate-500 break-all w-3/4 text-right">0x7a2B...8f9D (Contrato Validado)</span>
+                  <span className="text-slate-300">Hash de Origen:</span>
+                  <span className="text-xs text-slate-300 break-all w-3/4 text-right">
+                    {txHash ? `${txHash.substring(0, 8)}...${txHash.substring(txHash.length - 8)} (Validado)` : '0x7a2B...8f9D (Simulado)'}
+                  </span>
                 </div>
               </div>
             )}
@@ -268,10 +281,10 @@ const NfcPaymentModule = () => {
                   <div className={`absolute inset-0 rounded-full blur-xl opacity-20 animate-pulse ${mode === 'tpv' ? 'bg-indigo-500' : 'bg-emerald-500'}`}></div>
                   <SmartphoneNfc className={`h-24 w-24 relative z-10 ${mode === 'tpv' ? 'text-indigo-400' : 'text-emerald-400'}`} />
                 </div>
-                <h3 className="text-lg font-medium text-slate-200">
+                <h3 className="text-lg font-medium text-slate-100">
                   {mode === 'tpv' ? (nfcSupported ? 'Lector NFC Activo' : 'Esperando E-Cheque...') : 'Listo para Pagar'}
                 </h3>
-                <p className="text-slate-500 text-sm mt-2">
+                <p className="text-slate-300 text-sm mt-2">
                   {mode === 'tpv' 
                     ? nfcSupported ? 'Acerque la Tarjeta NFC a la parte trasera del teléfono' : 'Toque el botón abajo para Activar el Lector o Simular' 
                     : 'Asegure su entorno para la validación biométrica'}
@@ -307,7 +320,7 @@ const NfcPaymentModule = () => {
                   <CheckCircle className="h-24 w-24 text-emerald-400 relative z-10" />
                 </div>
                 <h3 className="text-xl font-bold text-emerald-400">Transacción Exitosa</h3>
-                <p className="text-slate-400 text-sm mt-2">Fondos liberados y retenidos fiscalmente.</p>
+                <p className="text-slate-200 text-sm mt-2">Fondos liberados y retenidos fiscalmente.</p>
               </div>
             )}
           </div>
@@ -323,7 +336,7 @@ const NfcPaymentModule = () => {
                   : 'bg-indigo-600 hover:bg-indigo-500 text-white hover:shadow-[0_0_20px_rgba(79,70,229,0.4)]' // Botón habilitado para Demo Manual
                 : status === 'success' && mode === 'tpv'
                   ? 'bg-indigo-600 hover:bg-indigo-500 text-white'
-                  : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  : 'bg-slate-800 text-slate-300 cursor-not-allowed'
             }`}
           >
             {status === 'idle' && mode === 'tpv' && (nfcSupported ? 'Lector NFC Activo (Click para Simular)' : 'Activar Lector NFC / Simular')}

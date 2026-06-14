@@ -58,11 +58,11 @@ const GobernanzaModule = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700/50 pb-6">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center">
+          <h2 className="text-2xl font-bold text-slate-100 flex items-center">
             <Scale className="h-6 w-6 text-indigo-400 mr-3" />
             Identidad Societaria B2B (Tokens de Poder)
           </h2>
-          <p className="text-slate-400 text-sm mt-2 max-w-2xl">
+          <p className="text-slate-200 text-sm mt-2 max-w-2xl">
             Control criptográfico de representaciones legales basado en el Código de Comercio. 
             Cualquier revocación invalida el dispositivo móvil del empleado en milisegundos.
           </p>
@@ -85,13 +85,13 @@ const GobernanzaModule = () => {
       {/* Add Director Form */}
       {showAddForm && (
         <form onSubmit={handleAddDirector} className="mb-8 bg-slate-900/80 border border-indigo-500/30 p-6 rounded-xl animate-in slide-in-from-top-4 fade-in">
-          <h3 className="text-slate-200 font-medium mb-4 flex items-center">
+          <h3 className="text-slate-100 font-medium mb-4 flex items-center">
             <FileSignature className="h-5 w-5 mr-2 text-indigo-400" />
             Otorgamiento de Poder Notarial
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1">Nombre Completo</label>
+              <label className="block text-xs text-slate-200 uppercase tracking-wider mb-1">Nombre Completo</label>
               <input 
                 type="text" 
                 required
@@ -102,7 +102,7 @@ const GobernanzaModule = () => {
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1">Cargo Societario</label>
+              <label className="block text-xs text-slate-200 uppercase tracking-wider mb-1">Cargo Societario</label>
               <input 
                 type="text" 
                 required
@@ -113,7 +113,7 @@ const GobernanzaModule = () => {
               />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 uppercase tracking-wider mb-1">Nivel de Poder</label>
+              <label className="block text-xs text-slate-200 uppercase tracking-wider mb-1">Nivel de Poder</label>
               <select 
                 value={newDirector.powerLevel}
                 onChange={e => setNewDirector({...newDirector, powerLevel: e.target.value})}
@@ -148,27 +148,27 @@ const GobernanzaModule = () => {
           >
             {/* Info Info */}
             <div className="flex items-center w-full lg:w-1/3 mb-4 lg:mb-0">
-              <div className={`p-3 rounded-full mr-4 ${director.status === 'active' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-red-500/10 text-red-400'}`}>
+              <div className={`p-3 rounded-full mr-4 ${director.status === 'active' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-red-500/10 text-red-600'}`}>
                 {director.status === 'active' ? <UserCheck className="h-6 w-6" /> : <UserMinus className="h-6 w-6" />}
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-200">{director.name}</h3>
-                <p className="text-sm text-slate-400">{director.role}</p>
+                <h3 className="text-lg font-semibold text-slate-100">{director.name}</h3>
+                <p className="text-sm text-slate-200">{director.role}</p>
               </div>
             </div>
 
             {/* Token & Power */}
             <div className="flex-1 w-full flex flex-col sm:flex-row sm:items-center justify-between lg:px-8 mb-4 lg:mb-0 space-y-2 sm:space-y-0">
               <div>
-                <p className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Nivel de Poder</p>
+                <p className="text-xs text-slate-300 uppercase font-semibold tracking-wider">Nivel de Poder</p>
                 <p className="text-sm text-slate-300 flex items-center mt-1">
-                  <FileSignature className="h-4 w-4 mr-2 text-slate-500" />
+                  <FileSignature className="h-4 w-4 mr-2 text-slate-300" />
                   {director.powerLevel}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Token NFC ID</p>
-                <p className="text-sm font-mono text-slate-400 mt-1">{director.token}</p>
+                <p className="text-xs text-slate-300 uppercase font-semibold tracking-wider">Token NFC ID</p>
+                <p className="text-sm font-mono text-slate-200 mt-1">{director.token}</p>
               </div>
             </div>
 
@@ -208,7 +208,7 @@ const GobernanzaModule = () => {
       </div>
 
       {/* Audit Log Hint */}
-      <div className="mt-8 flex items-center text-xs text-slate-500 bg-slate-900/50 p-4 rounded-lg">
+      <div className="mt-8 flex items-center text-xs text-slate-300 bg-slate-900/50 p-4 rounded-lg">
         <History className="h-4 w-4 mr-2" />
         <p>Todos los cambios de estado generan un acta constitutiva digital anclada en la blockchain a través de la firma electrónica del Administrador principal.</p>
       </div>
