@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Pragma FinOps',
+        name: 'SIGMA',
         short_name: 'FinOps',
         description: 'Plataforma ERP y Gestión de Tesorería NFC',
         theme_color: '#f8f9fa',

@@ -43,7 +43,7 @@ const ERPDashboardLayout = () => {
       <aside className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-slate-800">
           <Building2 className="h-6 w-6 text-indigo-500 mr-3" />
-          <span className="font-bold text-slate-100 text-lg tracking-tight">Pragma FinOps</span>
+          <span className="font-bold text-slate-100 text-lg tracking-tight">SIGMA</span>
         </div>
         
         <div className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
@@ -115,7 +115,7 @@ const ERPDashboardLayout = () => {
             <div className="flex items-center cursor-pointer group">
               <div className="text-right mr-3 hidden sm:block">
                 <p className="text-sm font-medium text-slate-200 group-hover:text-slate-100 transition-colors">Gerente Financiero</p>
-                <p className="text-xs text-slate-300">Pragma Corp</p>
+                <p className="text-xs text-slate-300">SIGMA Corp</p>
               </div>
               <UserCircle className="h-8 w-8 text-slate-200 group-hover:text-slate-300 transition-colors" />
             </div>

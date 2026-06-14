@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - SIGMA</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #334155;
+            --primary-color: #4f46e5;
+            --border-color: #e2e8f0;
+            --bg-card: #ffffff;
+            --note-bg: #eff6ff;
+            --note-border: #bfdbfe;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1, h2, h3 {
+            color: #0f172a;
+            margin-top: 2em;
+        }
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        .note {
+            background-color: var(--note-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .note strong {
+            color: #1e3a8a;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #db2777;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 40px 0;
+        }
+        .card {
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Manual de Usuario Oficial: SIGMA</h1>
+
+    <div class="note">
+        <strong>Nota:</strong> <strong>SIGMA</strong> es un sistema ERP (Planificación de Recursos Empresariales) y de Tesorería de próxima generación. Combina la eficiencia de la gestión financiera tradicional con la seguridad impenetrable de las tecnologías emergentes: <strong>NFC, Biometría, Web3 (Blockchain) y PWA</strong>.
+    </div>
+
+    <hr>
+
+    <h2>1. Arquitectura de Seguridad y Acceso</h2>
+    <p>La plataforma está construida bajo los más altos estándares de seguridad bancaria moderna:</p>
+    <ul>
+        <li><strong>Autenticación (Infraestructura Firebase):</strong> El sistema cuenta con infraestructura para bloquear todo acceso no autorizado mediante correo corporativo y contraseña cifrada (actualmente la barrera está desactivada para propósitos de demostración rápida).</li>
+        <li><strong>Firma Criptográfica (Web3 / Ethers.js):</strong> Cada transacción financiera importante (como la emisión de un E-Cheque) no solo se guarda en una base de datos PostgreSQL, sino que <strong>se firma digitalmente</strong> en el navegador usando una billetera criptográfica autogenerada, devolviendo un Hash único inmutable (ej. <code>0x7a2B...</code>).</li>
+        <li><strong>Instalación Nativa (PWA):</strong> La aplicación está configurada como una <em>Progressive Web App</em>.
+            <ul>
+                <li><strong>En Android/Chrome:</strong> Aparecerá un aviso en la parte inferior para "Instalar Aplicación". Se guardará en el menú de tu teléfono.</li>
+                <li><strong>En iPhone/Safari:</strong> Toca el botón "Compartir" y luego "Agregar a la pantalla de inicio".</li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr>
+
+    <h2>2. Módulo de Tesorería NFC (E-Cheques Inteligentes)</h2>
+    <p>Este módulo revolucionario permite ejecutar pagos corporativos seguros prescindiendo de los bancos tradicionales como intermediarios lentos.</p>
+    
+    <div class="note" style="border-left-color: #f59e0b; background-color: #fffbeb;">
+        <strong style="color: #b45309;">IMPORTANTE: Arquitectura NFC (Cómo funciona realmente la conexión)</strong><br>
+        Los navegadores web móviles modernos soportan la lectura de tecnología NFC, pero por restricciones de seguridad nativas (Apple/Google), no permiten la comunicación directa de "Teléfono a Teléfono" (Peer-to-Peer).<br><br>
+        Por lo tanto, el flujo real de SIGMA se basa en una <strong>Tarjeta Inteligente NFC Física</strong> que cada director/cliente posee, enlazada a su identidad digital.<br><br>
+        <strong>El flujo real es:</strong> El cliente autoriza en su teléfono con biometría &rarr; El TPV acerca su teléfono a la Tarjeta Física del cliente para leerla &rarr; El Smart Contract verifica y descuenta los fondos.
+    </div>
+
+    <h3>📱 Uso en Móvil (Modo Cliente / Pagador)</h3>
+    <ol>
+        <li>Abre el módulo de Tesorería NFC.</li>
+        <li>Selecciona el botón <strong>Modo Cliente</strong> (Verde).</li>
+        <li>Toca el botón <strong>"Autorizar Pago Biométrica"</strong>.</li>
+        <li>La pantalla se oscurecerá y se abrirá el <strong>Escáner Biométrico</strong> (simulación de FaceID/Huella Dactilar).</li>
+        <li>Tras validar la biometría, tu cuenta queda pre-autorizada en la nube para emitir los fondos al tocar tu tarjeta física en el punto de cobro.</li>
+    </ol>
+
+    <h3>💳 Uso en TPV (Terminal Punto de Venta / Cobrador)</h3>
+    <ol>
+        <li>Selecciona el <strong>Modo TPV</strong> (Azul).</li>
+        <li>Verás un radar azul pulsante. En un escenario de producción con hardware real, el navegador activará el lector de tarjetas del teléfono.</li>
+        <li>Puedes hacer clic en el ícono del <strong>Engranaje (⚙️)</strong> para editar a quién se le paga (Beneficiario), el concepto y el monto en USD.</li>
+        <li><strong>En el entorno de demostración:</strong> Haz clic en el botón <strong>"Simular NFC"</strong>. Este botón emula exactamente el momento en el que el cliente acerca su <strong>Tarjeta Física NFC</strong> a la parte trasera de tu teléfono.</li>
+        <li>Verás la <strong>Consola de Auditoría Criptográfica</strong> ejecutando los 5 pasos del contrato inteligente.</li>
+        <li>Al finalizar, la interfaz mostrará <strong>"Transacción Exitosa"</strong> y generará un <strong>Hash Web3</strong> real. Los fondos se restarán de tu liquidez.</li>
+    </ol>
+
+    <hr>
+
+    <h2>3. Módulo: Gobernanza & Poderes</h2>
+    <p>Para que el Smart Contract del E-Cheque autorice un pago, el "firmante" debe tener poder en la empresa. Este módulo gestiona esos poderes.</p>
+    <ul>
+        <li><strong>Panel de Directores:</strong> Muestra la junta directiva y el nivel de poder de cada individuo (A, B, C).</li>
+        <li><strong>Token Hash:</strong> Cada director tiene asignado un Token en la base de datos PostgreSQL.</li>
+        <li><strong>Revocación de Emergencia:</strong> Si un teléfono corporativo es robado o un director es despedido, el Gerente Financiero puede hacer clic en el botón de "Estado" (Activo/Revocado) para cortar sus poderes al instante, impidiéndole firmar nuevos E-Cheques en la Tesorería NFC.</li>
+        <li><strong>Agregar Firmantes:</strong> Haz clic en "+ Nuevo Firmante" e ingresa su nombre y nivel de poder.</li>
+    </ul>
+
+    <hr>
+
+    <h2>4. Módulo: Bolsa de Factoring</h2>
+    <p>Transforma tus cuentas por cobrar en liquidez inmediata cediendo las facturas.</p>
+    <ul>
+        <li><strong>Panel General:</strong> En la parte superior verás el "Flujo de Caja Disponible" y tarjetas con estadísticas (Total por cobrar, facturas cedidas, rendimiento APY).</li>
+        <li><strong>Liquidar Factura:</strong> En la lista de facturas pendientes, haz clic en el botón morado de <strong>"Liquidar"</strong>.</li>
+        <li>Tras una simulación de validación de riesgo en 2 segundos, la factura cambiará a estado "Liquidada" y <strong>verás cómo la Liquidez Disponible de la empresa sube en tiempo real</strong> en la parte superior.</li>
+    </ul>
+
+    <hr>
+
+    <h2>5. Módulo: Auditoría Fiscal</h2>
+    <p>La plataforma retiene automáticamente los impuestos (IVA, IGTF) de las transacciones (como los pagos NFC) para protegerte de multas del SENIAT o el ente fiscal local.</p>
+    <ul>
+        <li><strong>Comprobantes Automáticos:</strong> Cada vez que haces un pago en la Tesorería NFC, se genera automáticamente una línea de retención aquí.</li>
+        <li><strong>Creación Manual:</strong> Puedes hacer clic en "Nuevo Comprobante" y colocar el monto base; el sistema calculará el 8% de IVA retenido y el 3% de IGTF.</li>
+        <li><strong>Sincronización Fiscal:</strong> Los comprobantes nacen con estado "Pendiente" (gris). Al hacer clic en el botón de <strong>Sincronizar</strong>, la plataforma se conectará con el API del ente gubernamental y cambiará a "SENIAT Online" (verde), arrojando un código de control oficial (ej. <code>SEN-2026-X451</code>).</li>
+    </ul>
+
+    <hr>
+
+    <h2>6. Sincronización en la Nube (Railway + PostgreSQL)</h2>
+    <p>Gracias a la integración con <strong>Railway</strong>, SIGMA no es un simple programa de computadora aislado.</p>
+    <p>Todo lo que ves en pantalla: la nueva liquidez tras liquidar una factura, los directores que añades, y los pagos NFC que procesas, <strong>se almacenan en tiempo real en una base de datos PostgreSQL en la nube de Railway</strong>. Si cierras la aplicación o abres la plataforma en el navegador de tu celular en la calle, toda la información estará intacta, actualizada y sincronizada para todos los usuarios del ecosistema.</p>
+</div>
+
+</body>
+</html>

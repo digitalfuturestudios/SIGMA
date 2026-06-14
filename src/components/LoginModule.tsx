@@ -33,7 +33,7 @@ const LoginModule = () => {
           <div className="bg-indigo-100 p-4 rounded-2xl mb-4">
             <Shield className="h-8 w-8 text-indigo-600" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-100">Pragma FinOps</h1>
+          <h1 className="text-2xl font-bold text-slate-100">SIGMA</h1>
           <p className="text-slate-400 mt-2 text-center text-sm">Acceso seguro a la plataforma de Tesorería y ERP Mercantil</p>
         </div>
 
@@ -57,7 +57,7 @@ const LoginModule = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-500"
-                placeholder="gerente@pragma.com"
+                placeholder="gerente@sigma.com"
               />
             </div>
           </div>
