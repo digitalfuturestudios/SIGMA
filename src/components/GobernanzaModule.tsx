@@ -11,7 +11,12 @@ import {
   PlusCircle,
   X,
   Cpu,
-  Trash2
+  Trash2,
+  Briefcase,
+  Banknote,
+  ShieldAlert,
+  CheckCircle2,
+  Landmark
 } from 'lucide-react';
 
 import { useERPStore } from '../store/useERPStore';
@@ -22,7 +27,9 @@ const GobernanzaModule = () => {
   
   const [showAddForm, setShowAddForm] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
+  const [showScannerForApproval, setShowScannerForApproval] = useState(false);
   const [newDirector, setNewDirector] = useState({ name: '', role: '', powerLevel: 'Firma Clase C (Básica)' });
+  const [financialDecisionState, setFinancialDecisionState] = useState<'idle' | 'blocked' | 'approved'>('idle');
 
   const handleAddDirector = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,15 +49,30 @@ const GobernanzaModule = () => {
     setShowAddForm(false);
   };
 
+  const handleApprovalSuccess = () => {
+    setShowScannerForApproval(false);
+    setFinancialDecisionState('approved');
+  };
+
   return (
     <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-2xl p-6 lg:p-10 shadow-2xl relative overflow-hidden">
       
-      {/* Biometric Portal */}
+      {/* Biometric Portal for Adding Director */}
       {showScanner && (
         <div className="absolute inset-0 z-50 bg-slate-900/95 flex items-center justify-center p-6">
           <BiometricScanner 
             onScanSuccess={handleBiometricSuccess} 
             onCancel={() => setShowScanner(false)} 
+          />
+        </div>
+      )}
+
+      {/* Biometric Portal for Joint Signature Approval */}
+      {showScannerForApproval && (
+        <div className="absolute inset-0 z-50 bg-slate-900/95 flex items-center justify-center p-6">
+          <BiometricScanner 
+            onScanSuccess={handleApprovalSuccess} 
+            onCancel={() => setShowScannerForApproval(false)} 
           />
         </div>
       )}
@@ -80,6 +102,71 @@ const GobernanzaModule = () => {
             {showAddForm ? 'Cancelar' : 'Otorgar Nuevo Poder'}
           </button>
         </div>
+      </div>
+
+      {/* Simulador de Decisión Financiera */}
+      <div className="mb-8 p-6 bg-slate-900/60 border border-slate-700 rounded-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+           <Landmark className="w-32 h-32 text-indigo-500" />
+        </div>
+        <h3 className="text-lg font-bold text-slate-100 mb-2 flex items-center">
+          <Briefcase className="h-5 w-5 text-indigo-400 mr-2" />
+          Operaciones de Alto Valor
+        </h3>
+        <p className="text-sm text-slate-300 mb-6 max-w-3xl">
+          Simulación de ejecución de pago o contrato por más de $50,000 USD.
+        </p>
+
+        {financialDecisionState === 'idle' && (
+          <button 
+            onClick={() => setFinancialDecisionState('blocked')}
+            className="flex items-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg transition-colors shadow-lg"
+          >
+            <Banknote className="h-5 w-5 mr-2" />
+            Nueva Decisión Financiera
+          </button>
+        )}
+
+        {financialDecisionState === 'blocked' && (
+          <div className="bg-red-950/40 border border-red-900 p-5 rounded-lg animate-in slide-in-from-bottom-2 fade-in">
+            <div className="flex items-start">
+              <ShieldAlert className="h-6 w-6 text-red-500 mr-4 mt-0.5" />
+              <div>
+                <h4 className="text-red-400 font-semibold mb-2 text-lg">Acción Bloqueada: Se Requiere Firma Conjunta</h4>
+                <p className="text-sm text-red-300/80 mb-4">
+                  Los estatutos actuales requieren firmas conjuntas (Tipo A y Tipo B) para transacciones superiores a $50,000 USD.
+                </p>
+                <button
+                  onClick={() => setShowScannerForApproval(true)}
+                  className="flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium border border-slate-600 rounded-lg transition-colors shadow-md"
+                >
+                  <Key className="h-4 w-4 mr-2 text-indigo-400" />
+                  Simular Aprobación con Token NFC
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {financialDecisionState === 'approved' && (
+          <div className="bg-emerald-950/40 border border-emerald-900/50 p-5 rounded-lg animate-in zoom-in fade-in">
+            <div className="flex items-start">
+              <CheckCircle2 className="h-6 w-6 text-emerald-500 mr-4 mt-0.5" />
+              <div>
+                <h4 className="text-emerald-400 font-semibold mb-2 text-lg">Transacción Aprobada y Ejecutada</h4>
+                <p className="text-sm text-emerald-200/90 mb-4 italic font-medium leading-relaxed bg-emerald-900/20 p-3 rounded-lg border border-emerald-500/20">
+                  "Esto no solo es un botón; detrás de esto, el sistema valida las actas estatutarias de la empresa y deja una traza legalmente vinculante según la Ley de Mensajes de Datos."
+                </p>
+                <button
+                  onClick={() => setFinancialDecisionState('idle')}
+                  className="text-xs text-slate-400 hover:text-slate-300 underline flex items-center"
+                >
+                  <History className="h-3 w-3 mr-1" /> Reiniciar Simulación
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Add Director Form */}

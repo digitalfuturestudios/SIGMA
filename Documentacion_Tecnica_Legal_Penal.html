@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGMA - Documentación Técnica y Repercusión Penal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-300 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter text-white">
+                    SIGMA<span class="text-brand-500">.Tech&Law</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#tecnico" class="hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Arquitectura Técnica</a>
+                        <a href="#penal" class="hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Reforma Penal & Legal</a>
+                        <a href="#muchachos" class="hover:text-white px-3 py-2 rounded-md text-sm font-medium transition">Guía para el Equipo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl opacity-30 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 blur-[100px] rounded-full mix-blend-screen"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6">
+                Arquitectura Técnica y <br>
+                <span class="bg-gradient-to-r from-red-500 to-orange-400 gradient-text">Repercusión Penal</span>
+            </h1>
+            <p class="mt-4 max-w-3xl text-xl text-slate-400 mx-auto">
+                Documentación profunda de la ingeniería detrás de SIGMA, su interacción directa con el Código Penal Venezolano (evasión, forjamiento y delitos informáticos) y la guía definitiva para "los muchachos".
+            </p>
+        </div>
+    </div>
+
+    <!-- Section 1: Qué es SIGMA a nivel Técnico -->
+    <section id="tecnico" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">1. Ingeniería Detallada: ¿Qué es SIGMA realmente?</h2>
+                <div class="w-20 h-1 bg-brand-500 rounded"></div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-8 mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed mb-6">
+                    A nivel de código, <strong class="text-white">SIGMA</strong> no es solo una página web; es una aplicación de página única (SPA) de alta concurrencia, construida bajo una arquitectura reactiva y descentralizada. Está desarrollada usando el stack más moderno de la industria.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Stack Tecnológico</h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 text-brand-400 mr-3">⚛️</span>
+                                <div>
+                                    <strong class="text-slate-200">Frontend Core: React 19 + Vite + TypeScript.</strong>
+                                    <p class="text-sm text-slate-400">Garantiza tipos estrictos para evitar errores financieros en tiempo de ejecución. Vite asegura una compilación instantánea.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 text-brand-400 mr-3">🐻</span>
+                                <div>
+                                    <strong class="text-slate-200">State Management: Zustand.</strong>
+                                    <p class="text-sm text-slate-400">Controla el estado global (como la sesión del usuario, los tokens de gobernanza y la liquidez) de forma ultrarrápida sin re-renderizados innecesarios.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 text-brand-400 mr-3">🔐</span>
+                                <div>
+                                    <strong class="text-slate-200">Criptografía y Web3: Ethers.js.</strong>
+                                    <p class="text-sm text-slate-400">Utilizado en el Módulo de Gobernanza para generar firmas criptográficas irrefutables de las decisiones de la junta directiva.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 h-6 w-6 text-brand-400 mr-3">⚡</span>
+                                <div>
+                                    <strong class="text-slate-200">Backend & Real-time: Firebase + Socket.io.</strong>
+                                    <p class="text-sm text-slate-400">Sincronización en tiempo real de facturas (Factoring) y notificaciones de pagos por NFC (NfcPaymentModule).</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Módulos Core del Sistema</h4>
+                        <ul class="space-y-4">
+                            <li class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <strong class="text-emerald-400">FiscalModule.tsx:</strong> El cerebro tributario. Un motor que calcula automáticamente las retenciones de IVA e IGTF, parsea los datos y genera los archivos `.txt` requeridos por el SENIAT con precisión algorítmica.
+                            </li>
+                            <li class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <strong class="text-amber-400">GobernanzaModule.tsx:</strong> El sistema de poderes digitales. Intercepta operaciones sensibles y requiere que "Firma A" y "Firma B" introduzcan sus credenciales o tokens criptográficos para autorizar.
+                            </li>
+                            <li class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <strong class="text-blue-400">FactoringModule.tsx:</strong> La bolsa interna. Convierte cuentas por cobrar estancadas en activos negociables (tokenizados), conectando a empresas con problemas de liquidez con inversores internos.
+                            </li>
+                            <li class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <strong class="text-purple-400">BiometricScanner & NFC:</strong> Validación física para evitar suplantación de identidad en transacciones de alto nivel.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Repercusión Legal y Código Penal -->
+    <section id="penal" class="py-16 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">2. Repercusión Legal y Reformas al Código Penal</h2>
+                <div class="w-20 h-1 bg-red-500 rounded"></div>
+                <p class="mt-4 text-slate-400 max-w-3xl text-lg">
+                    SIGMA no es solo administrativo, es un <strong>escudo penal preventivo</strong>. Los errores fiscales y corporativos en Venezuela pueden conllevar penas privativas de libertad. Aquí explicamos cómo SIGMA previene delitos y qué artículos exige que se reformen.
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Código Penal -->
+                <div class="glass-panel rounded-2xl p-8 border-l-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-red-500/20 p-3 rounded-lg mr-4">
+                            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">A. El Código Penal Venezolano y los Delitos de Falsedad</h3>
+                    </div>
+                    
+                    <p class="text-slate-300 mb-4">El Módulo de Gobernanza previene directamente los delitos tipificados en el <strong>Código Penal</strong> respecto a la falsificación de documentos corporativos (Actas de Asamblea falsas, firmas forjadas).</p>
+                    
+                    <div class="bg-slate-950 rounded-xl p-6 border border-slate-800">
+                        <h4 class="text-red-400 font-semibold mb-3">Artículos del Código Penal involucrados:</h4>
+                        <ul class="space-y-3 text-slate-400">
+                            <li><strong>Artículo 319 y 320:</strong> Referentes a la falsificación de documentos privados. Penas de prisión de 6 a 30 meses para quien forje o altere un documento que perjudique al público o a terceros.</li>
+                        </ul>
+                        <div class="mt-5 p-4 bg-slate-900 border border-slate-700 rounded-lg">
+                            <strong class="text-white">¿Cómo lo previene SIGMA?</strong> Al utilizar `ethers.js` y el `BiometricScanner`, SIGMA convierte la firma de un director en un hash criptográfico inmutable. Es materialmente imposible forjar una aprobación financiera dentro de SIGMA.
+                        </div>
+                        <div class="mt-4 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                            <strong class="text-red-400">Propuesta de Reforma Penal:</strong>
+                            El Código Penal data de 1915 (con reformas posteriores, la última en 2005). Se debe reformar el Capítulo de "Falsificación de Documentos" para incluir explícitamente los <strong>Smart Contracts y Registros de Ledger Distribuido</strong>. La propuesta es agregar un artículo que penalice específicamente la "alteración maliciosa del código fuente de sistemas de gobernanza empresarial automatizada", dándole a la criptografía empresarial la misma protección penal que a un documento notariado.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COT -->
+                <div class="glass-panel rounded-2xl p-8 border-l-4 border-emerald-500">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-emerald-500/20 p-3 rounded-lg mr-4">
+                            <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">B. Código Orgánico Tributario (COT): Ilícitos Penales Tributarios</h3>
+                    </div>
+                    
+                    <p class="text-slate-300 mb-4">El `FiscalModule` es una armadura contra la cárcel. En el COT, los errores reiterados o la omisión de retenciones no solo acarrean multas pecuniarias, sino penas de prisión.</p>
+                    
+                    <div class="bg-slate-950 rounded-xl p-6 border border-slate-800">
+                        <h4 class="text-emerald-400 font-semibold mb-3">Artículos del COT involucrados:</h4>
+                        <ul class="space-y-3 text-slate-400">
+                            <li><strong>Artículo 119 (Defraudación Tributaria):</strong> Quien mediante simulación, ocultación o engaño deje de pagar tributos. Prisión de 6 meses a 7 años.</li>
+                            <li><strong>Artículo 121 (Apropiación Indebida de Tributos):</strong> El agente de retención que no entere al Fisco los montos retenidos (IVA o IGTF) enfrentará de 4 a 6 años de prisión.</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-lg">
+                            <strong class="text-emerald-400">Propuesta de Reforma (Eximente de Responsabilidad Algorítmica):</strong>
+                            Se debe reformar el COT para introducir la figura del "Error de Software Calificado". Si el agente de retención utiliza un ERP certificado por el Estado (como SIGMA podría serlo), y hay un error de cálculo provocado por un fallo en la API del gobierno o un fallo algorítmico sin intervención humana maliciosa, <strong>se debe eliminar la figura de DOLO (intención penal)</strong>, reduciendo el hecho a una infracción netamente administrativa, sin pena de cárcel para los directores.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delitos Informáticos -->
+                <div class="glass-panel rounded-2xl p-8 border-l-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500/20 p-3 rounded-lg mr-4">
+                            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">C. Ley Especial contra los Delitos Informáticos</h3>
+                    </div>
+                    
+                    <div class="bg-slate-950 rounded-xl p-6 border border-slate-800">
+                        <h4 class="text-blue-400 font-semibold mb-3">Artículos Involucrados:</h4>
+                        <ul class="space-y-3 text-slate-400">
+                            <li><strong>Artículo 6 (Acceso Indebido):</strong> Penado con prisión de 1 a 5 años. SIGMA lo previene con su arquitectura Firebase Auth y roles estrictos.</li>
+                            <li><strong>Artículo 14 (Fraude Informático):</strong> Prisión de 3 a 7 años para quien manipule datos para provecho propio. (Lo que intenta hacer alguien alterando el Factoring).</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                            <strong class="text-blue-400">Visión de Reforma:</strong> Actualizar esta ley (del 2001) para incluir específicamente la "Apropiación indebida de Tokens de Poder Corporativo" y vulneración de biometría en procesos mercantiles.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Guía para los Muchachos -->
+    <section id="muchachos" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">3. Guía de Explicación para "Los Muchachos"</h2>
+                <div class="w-20 h-1 bg-amber-500 rounded"></div>
+                <p class="mt-4 text-slate-400 max-w-3xl text-lg">
+                    Instrucciones precisas para que el equipo técnico (desarrolladores y presentadores) sepa cómo explicar SIGMA de manera que ingenieros, abogados y directivos queden impresionados.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Cómo explicar la técnica -->
+                <div class="glass-panel p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-amber-400 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        1. Explicando la Tecnología (Para Ingenieros)
+                    </h3>
+                    <ul class="space-y-6 text-slate-300">
+                        <li>
+                            <strong class="text-white block mb-1">El Discurso de Frontend:</strong>
+                            "Muchachos, cuando les pregunten por qué es rápido, digan: <em>'No usamos arquitecturas legacy de hace 10 años. Usamos React 19 con el compilador de Vite. El estado global no pesa porque lo maneja Zustand, lo que significa que procesar 1000 facturas en el módulo de Factoring no congela el navegador.'</em>"
+                        </li>
+                        <li>
+                            <strong class="text-white block mb-1">El Discurso de Seguridad:</strong>
+                            "Si preguntan por seguridad, expliquen que SIGMA no confía en contraseñas simples. <em>'Implementamos la lógica de ethers.js; cuando el Director A aprueba un pago, está firmando criptográficamente el payload. Si alguien altera un céntimo en la base de datos, el hash se rompe y la transacción se anula automáticamente.'</em>"
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Cómo explicar lo legal -->
+                <div class="glass-panel p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-emerald-400 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                        2. Explicando lo Legal (Para Abogados y Directivos)
+                    </h3>
+                    <ul class="space-y-6 text-slate-300">
+                        <li>
+                            <strong class="text-white block mb-1">El Discurso del Código Penal (El Miedo):</strong>
+                            "Muchachos, aquí tocan el dolor de los gerentes. Díganles: <em>'Directores, el Artículo 121 del COT da penas de cárcel por retrasos en retenciones de IGTF. SIGMA no es solo un software contable, es un seguro de libertad. El Módulo Fiscal está diseñado para blindarlos contra ilícitos penales tributarios, automatizando la retención antes de que el dinero salga de la cuenta.'</em>"
+                        </li>
+                        <li>
+                            <strong class="text-white block mb-1">El Discurso de la Reforma (La Visión):</strong>
+                            "Cuando hablemos del futuro, mencionen la Reforma Penal. <em>'SIGMA es tan avanzado que empuja los límites legales actuales. Estamos proponiendo reformas al Código Penal para que la firma criptográfica que usamos en el módulo de Gobernanza esté blindada a nivel penal contra forjamientos, modernizando el Artículo 319 del Código Penal de 1915 a la era blockchain.'</em>"
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- El flujo de la demo -->
+                <div class="glass-panel p-8 rounded-2xl lg:col-span-2">
+                    <h3 class="text-2xl font-bold text-brand-400 mb-6 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        3. El Flujo Exacto para la Demo (Simulación en Vivo)
+                    </h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                            <div class="text-brand-500 font-bold mb-2">Paso 1: El Dolor</div>
+                            <p class="text-sm text-slate-400">Abran el <strong>FiscalModule</strong>. Pregunten a la audiencia: "¿Cuántos aquí le temen a una auditoría del SENIAT?". Muestren cómo el sistema agarra 50 facturas y con un botón calcula IVA/IGTF y emite el archivo .TXT sin intervención humana.</p>
+                        </div>
+                        <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                            <div class="text-brand-500 font-bold mb-2">Paso 2: El Poder (Gobernanza)</div>
+                            <p class="text-sm text-slate-400">Vayan al <strong>GobernanzaModule</strong>. Intenten hacer un pago de $10,000. Dejen que el sistema lo rechace porque falta la "Firma B". Expliquen: "Esto evita el delito de fraude corporativo. El Código de Comercio exige firmas conjuntas, y SIGMA las exige de forma inmutable."</p>
+                        </div>
+                        <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                            <div class="text-brand-500 font-bold mb-2">Paso 3: El Remate Legal</div>
+                            <p class="text-sm text-slate-400">Cierren explicando que el proyecto no es solo código. "SIGMA prepara a Venezuela para la reforma del Código Penal, siendo el primer sistema que ofrece trazabilidad criptográfica contra el forjamiento de documentos (Art. 319 CP)."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+            <div class="text-2xl font-bold tracking-tighter text-white mb-4">
+                SIGMA<span class="text-brand-500">.</span>
+            </div>
+            <p class="text-slate-500 text-sm">
+                Documentación Técnica y Jurídica. Uso exclusivo para el equipo de desarrollo y asesores legales.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
