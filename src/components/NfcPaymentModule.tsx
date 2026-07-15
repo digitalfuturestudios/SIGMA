@@ -64,20 +64,26 @@ const NfcPaymentModule = () => {
     '[1.0s] Validando Poder Societario en Blockchain...',
     '[1.5s] Negociando Smart Contract V2...',
     '[2.0s] Reteniendo Impuestos y Hasheando...',
-    '[2.5s] Transacción Exitosa. Fondos Liberados.'
+    '[2.5s] Transacción Exitosa. Ejecutando cierre...'
   ];
 
-  const handleSimulation = () => {
+  const handleSimulation = (realSerialNumber?: string, payloadData?: any) => {
     if (status === 'processing' || mode === 'client') return;
     
-    // Si ya estaba en success, lo reseteamos inmediatamente para correr de nuevo
     setIsEditing(false);
     setStatus('processing');
     setConsoleLines([]);
     setTxHash(null);
     
-    // Simular consola de rayos X
-    simulationSteps.forEach((step, index) => {
+    const steps = realSerialNumber ? [
+      `[Real] Hardware NFC Detectado: UID ${realSerialNumber}`,
+      `[1.0s] Extrayendo Payload NDEF... ${payloadData ? '(Datos JSON encontrados)' : '(Vacío o Texto)'}`,
+      '[1.5s] Negociando Smart Contract V2...',
+      '[2.0s] Reteniendo Impuestos y Hasheando...',
+      '[2.5s] Transacción Exitosa. Escribiendo recibo físico en chip...'
+    ] : simulationSteps;
+
+    steps.forEach((step, index) => {
       setTimeout(() => {
         setConsoleLines(prev => [...prev, step]);
       }, (index + 1) * 500);
@@ -85,19 +91,39 @@ const NfcPaymentModule = () => {
 
     setTimeout(async () => {
       setStatus('success');
+      let finalSignature = "0xErrorGenerandoFirma";
       
-      // Integración Web3: Generar Firma Criptográfica Real
       try {
         const wallet = ethers.Wallet.createRandom();
-        const message = JSON.stringify(chequeData);
-        const signature = await wallet.signMessage(message);
-        setTxHash(signature);
+        const message = realSerialNumber 
+          ? `REAL_CARD_${realSerialNumber}_${JSON.stringify(payloadData || chequeData)}` 
+          : JSON.stringify(chequeData);
+        finalSignature = await wallet.signMessage(message);
+        setTxHash(finalSignature);
       } catch (err) {
         console.error("Web3 Signature Error:", err);
-        setTxHash("0xErrorGenerandoFirma");
+        setTxHash(finalSignature);
       }
 
-      // Integración con el estado global: El pago NFC reduce liquidez y agrega retención
+      // Si es un escaneo NFC real, intentamos escribir el recibo
+      if (realSerialNumber && 'NDEFReader' in window && nfcSupported) {
+         try {
+           const ndefWriter = new (window as any).NDEFReader();
+           await ndefWriter.write({
+             records: [{
+               recordType: "text",
+               data: JSON.stringify({ receiptHash: finalSignature, status: "liquidated", amount: chequeData.amount, timestamp: new Date().toISOString() })
+             }]
+           });
+           setConsoleLines(prev => [...prev, '[+] RECIBO NDEF escrito exitosamente en el hardware físico.']);
+         } catch(e) {
+           console.error("Error escribiendo recibo NDEF:", e);
+           setConsoleLines(prev => [...prev, '[-] Fallo al escribir recibo en el chip (Posible protección Solo-Lectura).']);
+         }
+      } else if (!realSerialNumber) {
+         setConsoleLines(prev => [...prev, '[i] Simulación completa. Sin hardware físico de escritura.']);
+      }
+
       addFiscalTransactionFromTesoreria(parseFloat(chequeData.amount), chequeData.beneficiary);
     }, 3000);
   };
@@ -108,26 +134,46 @@ const NfcPaymentModule = () => {
         const ndefReader = new (window as any).NDEFReader();
         await ndefReader.scan();
         setNfcSupported(true);
+        setConsoleLines(prev => [...prev, '[Sistema] Lector de hardware NFC activado correctamente. Acerque la tarjeta.']);
         
         ndefReader.onreading = (event: any) => {
+          const serialNumber = event.serialNumber;
           console.log("Hardware NFC Leído", event);
-          if (handleSimulationRef.current) handleSimulationRef.current();
+          
+          let payloadData = null;
+          try {
+            const decoder = new TextDecoder();
+            for (const record of event.message.records) {
+              if (record.recordType === "text") {
+                const text = decoder.decode(record.data);
+                try {
+                  payloadData = JSON.parse(text);
+                } catch(e) {
+                  payloadData = text;
+                }
+              }
+            }
+          } catch(e) {
+             console.error("Error leyendo records del NDEF", e);
+          }
+
+          if (handleSimulationRef.current) {
+            handleSimulationRef.current(serialNumber || 'NFC_TAG_DESCONOCIDO', payloadData);
+          }
         };
         
         ndefReader.onreadingerror = (event: any) => {
           console.log("Error leyendo NFC. Tarjeta no es NDEF", event);
-          // Muchas tarjetas bancarias o en blanco causan este error porque no son NDEF estándar.
-          // Para la demostración de la app, también lanzamos la simulación aquí.
-          if (handleSimulationRef.current) handleSimulationRef.current();
+          if (handleSimulationRef.current) handleSimulationRef.current('TAG_NO_NDEF_COMPATIBLE');
         };
         
-        // El lector ya está activo esperando
         return; 
-      } catch (error) {
+      } catch (error: any) {
         console.log("Web NFC API bloqueada o sin permisos.", error);
+        setConsoleLines(prev => [...prev, `[Error Hardware] ${error.message}. Pasando a modo simulador.`]);
       }
     }
-    // Si no hay soporte NFC o ya estaba activado (y el usuario quiere forzar la simulación)
+    // Botón manual de simular si NFC falla o no está disponible
     handleSimulation();
   };
 
@@ -339,16 +385,16 @@ const NfcPaymentModule = () => {
                   : 'bg-slate-800 text-slate-300 cursor-not-allowed'
             }`}
           >
-            {status === 'idle' && mode === 'tpv' && (nfcSupported ? 'Lector NFC Activo (Click para Simular)' : 'Activar Lector NFC / Simular')}
+            {status === 'idle' && mode === 'tpv' && <span>{nfcSupported ? 'Lector NFC Activo (Click para Simular)' : 'Activar Lector NFC / Simular'}</span>}
             {status === 'idle' && mode === 'client' && (
               <>
                 <Cpu className="w-5 h-5 mr-2" />
                 Autorizar Pago Biométrica
               </>
             )}
-            {status === 'processing' && 'Ejecutando Smart Contract...'}
-            {status === 'success' && mode === 'tpv' && 'Nueva Transacción'}
-            {status === 'success' && mode === 'client' && 'Pago Emitido Exitosamente'}
+            {status === 'processing' && <span>Ejecutando Smart Contract...</span>}
+            {status === 'success' && mode === 'tpv' && <span>Nueva Transacción</span>}
+            {status === 'success' && mode === 'client' && <span>Pago Emitido Exitosamente</span>}
           </button>
         </div>
         

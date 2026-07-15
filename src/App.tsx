@@ -1,8 +1,11 @@
 import ERPDashboardLayout from './components/ERPDashboardLayout'
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
-    <ERPDashboardLayout />
+    <ErrorBoundary>
+      <ERPDashboardLayout />
+    </ErrorBoundary>
   )
 }
 
